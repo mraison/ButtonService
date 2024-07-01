@@ -1,13 +1,13 @@
 import os
 
-from button import ButtonRead
-from connection import KeyboardConnection
+from .button import ButtonRead
+from .connection import KeyboardConnection
 
 conn = KeyboardConnection('p')
 btn = ButtonRead(
     conn
 )
-status_file = "./button_status"
+status_file = "button_status"
 if __name__ == "__main__":
     while True:
         try:

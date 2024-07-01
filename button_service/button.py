@@ -1,4 +1,4 @@
-from connection import ButtonConnection
+from .connection import ButtonConnection
 import json
 import time
 

@@ -1,4 +1,4 @@
-button_status
+button_service/button_status
 
 # Editors
 .vscode/
@@ -11,6 +11,8 @@ button_status
 Thumbs.db
 
 __pycache__/
+*\.egg
+*\.egg-info
 
 # Unit test / coverage reports
 htmlcov/

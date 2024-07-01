@@ -1,7 +1,7 @@
 import time
 
-from connection import ButtonConnection
-from button import ButtonStatus, ButtonRead
+from .connection import ButtonConnection
+from .button import ButtonStatus, ButtonRead
 from unittest.mock import MagicMock
 
 def test_button_is_pressed():
