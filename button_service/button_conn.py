@@ -10,13 +10,6 @@ class InvalidButtonTypeException(ButtonConnectionException):
 
 
 class ButtonConnection:
-
-    def start(self):
-        pass
-
-    def stop(self):
-        pass
-
     def is_pressed(self) -> bool:
         pass
 
@@ -31,6 +24,7 @@ class KeyboardConnection(ButtonConnection):
 
 
 class GPIOConnection(ButtonConnection):
+    # implement this later...
     pass
 
 
@@ -43,8 +37,8 @@ BUTTON_TYPE_MAP = {
 }
 
 
-def getButtonConn(buttonType) -> ButtonConnection:
-    if buttonType not in BUTTON_TYPE_MAP:
-        raise InvalidButtonTypeException(f"{buttonType} is not a valid button connection option.")
+def getButtonConn(button_type) -> ButtonConnection:
+    if button_type not in BUTTON_TYPE_MAP:
+        raise InvalidButtonTypeException(f"{button_type} is not a valid button connection option.")
 
-    return BUTTON_TYPE_MAP[buttonType]()
+    return BUTTON_TYPE_MAP[button_type]()
