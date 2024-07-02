@@ -1,0 +1,12 @@
+cassandra-driver==3.29.1
+click==8.1.7
+colorama==0.4.6
+exceptiongroup==1.2.1
+geomet==0.2.1.post1
+iniconfig==2.0.0
+keyboard==0.13.5
+packaging==24.1
+pluggy==1.5.0
+pytest==8.2.2
+six==1.16.0
+tomli==2.0.1

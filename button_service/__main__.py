@@ -1,24 +1,23 @@
 import os
 
-from .button import ButtonRead
+from .button import ButtonRead, ButtonWrite
 from .connection import KeyboardConnection
+from .db_conn import CassandraConnection
 
-conn = KeyboardConnection('p')
-btn = ButtonRead(
-    conn
+btnconn = KeyboardConnection('p')
+btnR = ButtonRead(
+    btnconn
 )
-status_file = "button_status"
+
+dbconn = CassandraConnection()
+btnW = ButtonWrite(dbconn)
+
 if __name__ == "__main__":
     while True:
         try:
-            status = btn.read()
-            if os.path.exists(status_file):
-                os.remove(status_file)
-
-            with open(status_file, "w") as f:
-                f.write(status.serialize())
+            status = btnR.read()
+            if not btnW.write(status):
+                print("data dropped...")
         except KeyboardInterrupt:
             print("Interrupted! Stopping!")
-            if os.path.exists(status_file):
-                os.remove(status_file)
             break

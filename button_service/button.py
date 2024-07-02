@@ -1,4 +1,5 @@
 from .connection import ButtonConnection
+from .db_conn import DBConnection, InsertIntoButtonStatusTbl
 import json
 import time
 
@@ -8,6 +9,10 @@ class ButtonStatus:
         self.state = state
         self.change_time = change_time
         self.check_time = check_time
+
+    @property
+    def is_new_state(self):
+        return self.change_time == self.check_time
 
     def serialize(self) -> str:
         return json.dumps(
@@ -35,13 +40,35 @@ class ButtonRead:
             # time checked is same as last changed now.
             return ButtonStatus(
                 state=self.status,
-                change_time=self.change_time,
-                check_time=self.change_time
+                change_time=int(self.change_time),
+                check_time=int(self.change_time)
             )
         else:
             # update only the time last checked and return.
             return ButtonStatus(
                 state=self.status,
-                change_time=self.change_time,
-                check_time=time.time()
+                change_time=int(self.change_time),
+                check_time=int(time.time())
             )
+
+
+class ButtonWrite:
+
+    def __init__(self, conn: DBConnection):
+        self._db = conn
+
+    def write(self, button_status: ButtonStatus):
+        if button_status.is_new_state:
+            try:
+                self._db.execute(
+                    InsertIntoButtonStatusTbl(
+                        button_status.state,
+                        button_status.change_time
+                    )
+                )
+                return True
+            except Exception as e:
+                print(e)
+                return False
+
+        return True
