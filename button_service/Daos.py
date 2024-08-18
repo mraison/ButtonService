@@ -16,10 +16,11 @@ class ButtonWrite:
     def __init__(self, conn: DBConnection):
         self._db = conn
 
-    def write(self, state, check_time):
+    def write(self, device_id, state, check_time):
         try:
             self._db.execute(
                 InsertIntoButtonStatusTbl(
+                    device_id,
                     state,
                     check_time
                 )

@@ -8,15 +8,16 @@ class SQLRequest:
 
 
 class InsertIntoButtonStatusTbl(SQLRequest):
-    def __init__(self, state, change_time):
+    def __init__(self, device, state, change_time):
         sql = """
             INSERT INTO panicbutton.statetbl (
+                device,
                 id,
                 state,
                 change_time
-            ) VALUES (uuid(), %s, %s)
+            ) VALUES (%s, NOW(), %s, %s)
         """
-        args = [state, change_time]
+        args = [device, state, change_time]
         super().__init__(sql, args)
 
 
