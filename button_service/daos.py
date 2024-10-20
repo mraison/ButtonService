@@ -3,7 +3,7 @@ from .db_conn import DBConnection, InsertIntoButtonStatusTbl
 import json
 
 
-class ButtonRead:
+class ButtonDao:
     def __init__(self, conn: ButtonConnection):
         self._conn = conn
 
@@ -11,7 +11,7 @@ class ButtonRead:
         return self._conn.is_pressed()
 
 
-class ButtonWrite:
+class StatusDao:
 
     def __init__(self, conn: DBConnection):
         self._db = conn

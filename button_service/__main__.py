@@ -1,30 +1,31 @@
 import time
 
-from .Daos import ButtonRead, ButtonWrite
-from .Models import ButtonStatusModel
+from .daos import ButtonDao, StatusDao
+from .models import ButtonStatusModel, ButtonModel
 from .button_conn import KeyboardConnection
 from .db_conn import CassandraConnection
 
 btnconn = KeyboardConnection('p')
-btnR = ButtonRead(
+btnR = ButtonDao(
     btnconn
 )
 
 dbconn = CassandraConnection()
-btnW = ButtonWrite(dbconn)
+btnW = StatusDao(dbconn)
 
 if __name__ == "__main__":
     status = ButtonStatusModel(False, btnW)
+    button = ButtonModel(btnR)
 
     print("Ready!")
     while True:
         try:
-            if btnR.read():
+            if button.is_pressed():
                 status.update(not status.state)
                 if not status.save():
                     print("data dropped...")
                 # I need to wait until the button is released again to continue the original while loop...
-                while btnR.read():
+                while button.is_pressed():
                     pass
 
         except KeyboardInterrupt:
