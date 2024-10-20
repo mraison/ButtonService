@@ -13,9 +13,9 @@ class RabbitClient:
                 producer = Producer(chan)
                 producer.publish(
                     data,
-                    self._exchange,
-                    self._routing_key,
-                    [self._exchange]
+                    exchange=self._exchange,
+                    routing_key=self._routing_key,
+                    declare=[self._exchange]
                 )
                 return True
 

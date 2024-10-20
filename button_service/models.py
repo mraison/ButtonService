@@ -17,7 +17,7 @@ class ButtonStatusModel:
     def save(self):
         resp = self._dao.write(self.device_id, self.state, self.check_time)
         if resp and self._rabbit_cli:
-            return self._rabbit_cli.send(self.serialize())
+            return self._rabbit_cli.send(self.to_dict())
         else:
             return resp
 
@@ -27,12 +27,15 @@ class ButtonStatusModel:
 
     def serialize(self) -> str:
         return json.dumps(
-            {
-                'device_id': self.device_id,
-                'state': self.state,
-                'check_time': self.check_time
-            }
+            self.to_dict()
         )
+
+    def to_dict(self):
+        return {
+            'device_id': self.device_id,
+            'state': self.state,
+            'check_time': self.check_time
+        }
 
 
 class ButtonModel:

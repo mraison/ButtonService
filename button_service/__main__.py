@@ -1,6 +1,7 @@
-import time
+from kombu import Exchange
 
 from .daos import ButtonDao, StatusDao
+from .client import RabbitClient
 from .models import ButtonStatusModel, ButtonModel
 from .button_conn import KeyboardConnection
 from .db_conn import CassandraConnection
@@ -13,8 +14,14 @@ btnR = ButtonDao(
 dbconn = CassandraConnection()
 btnW = StatusDao(dbconn)
 
+rab_conn = RabbitClient(
+    'amqp://guest:guest@localhost:5672/',
+    'panic_key',
+    Exchange('panic_ex', type='direct')
+)
+
 if __name__ == "__main__":
-    status = ButtonStatusModel(False, btnW)
+    status = ButtonStatusModel(False, btnW, rab_conn)
     button = ButtonModel(btnR)
 
     print("Ready!")
