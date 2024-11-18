@@ -6,9 +6,8 @@ from .client import RabbitClient
 
 
 class ButtonStatusModel:
-    device_id = 1
-
-    def __init__(self, state: bool, dao: StatusDao, rabbit_cli: RabbitClient = None):
+    def __init__(self, device_id: int, state: bool, dao: StatusDao, rabbit_cli: RabbitClient = None):
+        self.device_id = device_id
         self.state = state
         self.check_time = int(time.time())
         self._dao = dao

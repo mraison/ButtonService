@@ -14,7 +14,7 @@ def test_button_status_serialize():
     db.execute = MagicMock(return_value=True)
     btn = StatusDao(db)
 
-    status = ButtonStatusModel(True, btn)
+    status = ButtonStatusModel(1, True, btn)
     expected = '{"device_id": 1, "state": true, "check_time": %s}' % t
 
     assert expected == status.serialize()
@@ -28,7 +28,7 @@ def test_button_status_update():
     db.execute = MagicMock(return_value=True)
     btn = StatusDao(db)
 
-    status = ButtonStatusModel(True, btn)
+    status = ButtonStatusModel(1, True, btn)
 
     assert status.state
     assert status.check_time == t

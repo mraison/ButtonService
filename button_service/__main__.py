@@ -1,4 +1,5 @@
 from kombu import Exchange
+import os
 
 from .daos import ButtonDao, StatusDao
 from .client import RabbitClient
@@ -11,17 +12,25 @@ btnR = ButtonDao(
     btnconn
 )
 
-dbconn = CassandraConnection()
+dbconn = CassandraConnection(
+    os.environ.get('CASSANDRA_IP', '127.0.0.1'),
+    int(os.environ.get('CASSANDRA_PORT', '9042')
+)
 btnW = StatusDao(dbconn)
 
 rab_conn = RabbitClient(
-    'amqp://guest:guest@localhost:5672/',
+    os.environ.get('AMQP_URL', ''),
     'panic_key',
     Exchange('panic_ex', type='direct')
 )
 
 if __name__ == "__main__":
-    status = ButtonStatusModel(False, btnW, rab_conn)
+    status = ButtonStatusModel(
+        int(os.environ.get('DEVICE_ID', '-1')
+        False,
+        btnW,
+        rab_conn,
+    )
     button = ButtonModel(btnR)
 
     print("Ready!")
