@@ -1,5 +1,6 @@
 from kombu import Exchange
 import os
+import time
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -35,13 +36,16 @@ if __name__ == "__main__":
     print("Ready!")
     while True:
         try:
-            if btnconn.is_pressed():
-                status.update(not status.state)
+            btn_is_pressed = btnconn.is_pressed()
+            if btn_is_pressed != status.state:
+                status.update(btn_is_pressed)
                 if not status.save():
                     print("data dropped...")
                 # # I need to wait until the button is released again to continue the original while loop...
                 # while button.is_pressed():
                 #     pass
+            else:
+                time.sleep(0.01)
 
         except KeyboardInterrupt:
             print("Interrupted! Stopping!")

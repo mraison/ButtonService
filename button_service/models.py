@@ -8,7 +8,7 @@ from button_service.client import RabbitClient
 class ButtonStatusModel:
     def __init__(self, device_id: int, state: bool, dao: StatusDao, rabbit_cli: RabbitClient = None):
         self.device_id = device_id
-        self.state = state
+        self.state: bool = state
         self.check_time = int(time.time())
         self._dao = dao
         self._rabbit_cli = rabbit_cli
@@ -20,7 +20,7 @@ class ButtonStatusModel:
         else:
             return resp
 
-    def update(self, state):
+    def update(self, state: bool):
         self.state = state
         self.check_time = int(time.time())
 
