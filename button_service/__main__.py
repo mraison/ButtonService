@@ -8,10 +8,11 @@ load_dotenv()
 from button_service.daos import StatusDao
 from button_service.client import RabbitClient
 from button_service.models import ButtonStatusModel
-from button_service.button_conn import KeyboardConnection
+from button_service.button_conn import KeyboardConnection, GPIOConnection
 from button_service.db_conn import CassandraConnection
 
-btnconn = KeyboardConnection('p')
+# btnconn = KeyboardConnection('p')
+btnconn = GPIOConnection()
 
 dbconn = CassandraConnection(
     os.environ.get('CASSANDRA_IP', '127.0.0.1'),

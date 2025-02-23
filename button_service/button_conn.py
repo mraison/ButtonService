@@ -23,9 +23,10 @@ class KeyboardConnection(ButtonConnection):
         return keyboard.is_pressed(self._panicKey)
 
 
+
+import RPi.GPIO as GPIO
 class GPIOConnection(ButtonConnection):
     def __init__(self):
-        import RPi.GPIO as GPIO
         # use P1 header pin numbering convention
         GPIO.setmode(GPIO.BOARD)
 
@@ -35,7 +36,7 @@ class GPIOConnection(ButtonConnection):
         self._off_state = 1
 
     def is_pressed(self) -> bool:
-        return GPIO.input(32) == self._off_state
+        return GPIO.input(32) != self._off_state
 
 
 KEYBOARD_BUTTON = 0
