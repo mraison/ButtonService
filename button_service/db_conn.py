@@ -32,4 +32,5 @@ class CassandraConnection(DBConnection):
         self.session = self.cluster.connect()
 
     def execute(self, req: SQLRequest):
+        pass
         return self.session.execute(req.sql, req.args)

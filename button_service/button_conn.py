@@ -24,8 +24,18 @@ class KeyboardConnection(ButtonConnection):
 
 
 class GPIOConnection(ButtonConnection):
-    # implement this later...
-    pass
+    def __init__(self):
+        import RPi.GPIO as GPIO
+        # use P1 header pin numbering convention
+        GPIO.setmode(GPIO.BOARD)
+
+        # Set up the GPIO channels - one input and one output
+        GPIO.setup(32, GPIO.IN)
+
+        self._off_state = 1
+
+    def is_pressed(self) -> bool:
+        return GPIO.input(32) == self._off_state
 
 
 KEYBOARD_BUTTON = 0

@@ -1,9 +1,9 @@
 import time
 from unittest.mock import MagicMock
 
-from .models import ButtonStatusModel
-from .daos import StatusDao
-from .db_conn import DBConnection
+from button_service.models import ButtonStatusModel
+from button_service.daos import StatusDao
+from button_service.db_conn import DBConnection
 
 
 def test_button_status_serialize():

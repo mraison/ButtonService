@@ -1,14 +1,5 @@
-from .button_conn import ButtonConnection
-from .db_conn import DBConnection, InsertIntoButtonStatusTbl
+from button_service.db_conn import DBConnection, InsertIntoButtonStatusTbl
 import json
-
-
-class ButtonDao:
-    def __init__(self, conn: ButtonConnection):
-        self._conn = conn
-
-    def read(self) -> bool:
-        return self._conn.is_pressed()
 
 
 class StatusDao:

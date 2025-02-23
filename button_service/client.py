@@ -10,6 +10,7 @@ class RabbitClient:
     def send(self, data: dict) -> bool:
         with Connection(self._url) as conn:
             with conn.channel() as chan:
+                print(f"Sending amqp: {data}")
                 producer = Producer(chan)
                 producer.publish(
                     data,

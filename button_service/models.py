@@ -1,8 +1,8 @@
 import json
 import time
 
-from .daos import StatusDao, ButtonDao
-from .client import RabbitClient
+from button_service.daos import StatusDao
+from button_service.client import RabbitClient
 
 
 class ButtonStatusModel:
@@ -35,11 +35,3 @@ class ButtonStatusModel:
             'state': self.state,
             'check_time': self.check_time
         }
-
-
-class ButtonModel:
-    def __init__(self, dao: ButtonDao):
-        self._dao = dao
-
-    def is_pressed(self):
-        return self._dao.read()
